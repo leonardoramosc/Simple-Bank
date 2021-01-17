@@ -26,13 +26,17 @@ func AccountsHandler(w http.ResponseWriter, r *http.Request) {
 
 	accounts := []models.Account{}
 
+	// rows.Next() returns true if there is an actual row
+	//(everytime is called, we will get the next row when calling rows.Scan())
 	for i := 0; rows.Next(); i++ {
 		var acc models.Account
 
+		// Assing the current row to the Account struct
 		rows.Scan(&acc.Owner, &acc.Balance, &acc.Currency, &acc.CreatedAt)
 		accounts = append(accounts, acc)
 	}
 
+	// Convert the slice of accounts into JSON format
 	response, err := json.Marshal(accounts)
 
 	if err != nil {
@@ -42,5 +46,6 @@ func AccountsHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	// Send the response to the client
 	w.Write(response)
 }
