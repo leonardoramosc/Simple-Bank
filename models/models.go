@@ -11,3 +11,9 @@ type Account struct {
 	Currency  string    `json:"currency"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+// ErrorResponse define the error json to send
+type ErrorResponse struct {
+	Status  string `json:"status"`
+	Message string `json:"message"`
+}
